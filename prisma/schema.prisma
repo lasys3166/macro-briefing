@@ -1,0 +1,301 @@
+// 개인용 투자 AI 에이전트 플랫폼 — DB 스키마
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ===== 매크로 지표 =====
+model MacroIndicator {
+  id        String   @id @default(cuid())
+  date      DateTime @db.Date
+  category  String   // interest_rate | stock_index | exchange_rate | volatility | commodity | liquidity
+  name      String   // e.g. "KR_3Y_BOND", "VIX", "GOLD"
+  ticker    String   // Yahoo Finance 티커
+  value     Float
+  prevClose Float?   // 전일 종가
+  change    Float?   // 전일 대비 변화 (절대)
+  changePct Float?   // 전일 대비 변화 (%)
+  avg7d     Float?   // 최근 7일 평균
+  vs7dAvg   Float?   // 7일 평균 대비 차이
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([date, name])
+  @@index([date])
+  @@index([category, date])
+}
+
+// ===== 유튜브 영상 =====
+model YouTubeVideo {
+  id          String   @id @default(cuid())
+  videoId     String   @unique // YouTube 영상 ID
+  channelId   String
+  channelName String
+  title       String
+  description String?  @db.Text
+  publishedAt DateTime
+  viewCount   Int      @default(0)
+  likeCount   Int      @default(0)
+  commentCount Int     @default(0)
+  duration    Int?     // 초 단위
+  transcript  String?  @db.Text // 자막 텍스트
+  thumbnailUrl String?
+
+  // 수집 메타
+  fetchedAt   DateTime @default(now())
+  hasSubtitle Boolean  @default(false)
+
+  // 관계
+  summary     YouTubeSummary?
+
+  @@index([publishedAt])
+  @@index([channelId])
+}
+
+// ===== 유튜브 요약 =====
+model YouTubeSummary {
+  id            String @id @default(cuid())
+  videoId       String @unique
+  video         YouTubeVideo @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  summary       String @db.Text    // 8줄 요약
+  keyPoints     Json   // 핵심 주장 3개 (배열)
+  evidence      Json   // 근거 (팩트/데이터/추정 분리)
+  counterPoints Json   // 반론/리스크 2개
+  macroComment  String @db.Text    // 오늘 지표와 연결 코멘트
+
+  // 랭킹
+  rankScore     Float  @default(0) // 종합 랭킹 점수
+  trustScore    Float  @default(0) // 채널 신뢰도
+  impactScore   Float  @default(0) // 영향력 (조회수/좋아요)
+  relevanceScore Float @default(0) // 주제 적합도
+  freshnessScore Float @default(0) // 최신성
+
+  createdAt     DateTime @default(now())
+
+  @@index([rankScore(sort: Desc)])
+}
+
+// ===== 일별 리포트 =====
+model DailyReport {
+  id          String   @id @default(cuid())
+  date        DateTime @unique @db.Date
+  
+  // 리포트 구성
+  indicators  Json     // 오늘의 숫자 테이블 데이터
+  topChanges  Json     // 변동 Top 변화 요약
+  hypotheses  Json     // "왜 이런 변화가" 가설 3개
+  checkpoints Json     // 내일 체크 포인트 3개
+  ytBriefing  Json     // 유튜브 브리핑 TOP N
+
+  // 렌더링
+  htmlContent String?  @db.Text  // 렌더링된 HTML
+  textContent String?  @db.Text  // 텍스트 버전 (텔레그램용)
+
+  // 메타
+  status      String   @default("draft") // draft | published | failed
+  sentVia     String[] // ["telegram", "web"]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([date(sort: Desc)])
+}
+
+// ===== Macro Regime AI =====
+model RegimeSnapshot {
+  id          String   @id @default(cuid())
+  date        DateTime @unique @db.Date
+  score       Float    // -100 ~ +100
+  label       String   // RISK_ON | NEUTRAL | RISK_OFF
+  explanation String   @db.Text  // LLM 생성 설명
+  drivers     Json     // 주요 드라이버 지표별 스코어
+  tomorrowWatch String? @db.Text // 내일 주시 포인트
+
+  createdAt   DateTime @default(now())
+
+  @@index([date(sort: Desc)])
+}
+
+// ===== Correlation Engine =====
+model CorrelationSnapshot {
+  id          String   @id @default(cuid())
+  date        DateTime @db.Date
+  window      Int      // 20, 60, 120
+  pairs       Json     // { "SPX_vs_US10Y": 0.85, ... }
+  topPositive Json     // 상위 양의 상관관계 페어
+  topNegative Json     // 상위 음의 상관관계 페어
+  shifts      Json?    // 상관관계 급변 페어
+
+  createdAt   DateTime @default(now())
+
+  @@unique([date, window])
+  @@index([date(sort: Desc)])
+}
+
+// ===== Risk Radar =====
+model RiskSnapshot {
+  id        String   @id @default(cuid())
+  date      DateTime @unique @db.Date
+  score     Float    // 0 ~ 100
+  level     String   // LOW | MEDIUM | HIGH
+  signals   Json     // 12개 시그널별 상태
+  alerts    Json?    // HIGH 시 알림 내용
+
+  createdAt DateTime @default(now())
+
+  @@index([date(sort: Desc)])
+}
+
+// ===== Fear & Greed / Sentiment =====
+model SentimentSnapshot {
+  id            String   @id @default(cuid())
+  date          DateTime @unique @db.Date
+  usFearGreed   Float    // 0 ~ 100
+  usLabel       String   // Extreme Fear ~ Extreme Greed
+  krSentiment   Float    // 0 ~ 100
+  krLabel       String
+  components    Json     // 개별 구성요소 상세
+
+  createdAt     DateTime @default(now())
+
+  @@index([date(sort: Desc)])
+}
+
+// ===== Macro Story Engine =====
+model MacroStory {
+  id          String   @id @default(cuid())
+  date        DateTime @unique @db.Date
+  summary     String   @db.Text  // 오늘 시장 요약
+  drivers     Json     // Top 변화 지표
+  effects     Json     // 연쇄 반응
+  regime      String?  // 현재 Regime
+  checkpoints Json     // 내일 체크 포인트
+
+  createdAt   DateTime @default(now())
+
+  @@index([date(sort: Desc)])
+}
+
+// ===== Bank Planner =====
+model BankAccount {
+  id        String   @id @default(cuid())
+  name      String   // 통장 별명
+  type      String   // income | savings | spending | seasonal | emergency
+  balance   Float    @default(0)
+  color     String?  // UI 컬러
+  icon      String?  // 이모지
+
+  rules     BankRule[] @relation("SourceRules")
+  targetOf  BankRule[] @relation("TargetRules")
+  transactions BankTransaction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BankRule {
+  id          String   @id @default(cuid())
+  sourceId    String
+  source      BankAccount @relation("SourceRules", fields: [sourceId], references: [id], onDelete: Cascade)
+  targetId    String
+  target      BankAccount @relation("TargetRules", fields: [targetId], references: [id], onDelete: Cascade)
+  type        String   // fixed | percentage
+  amount      Float?   // type=fixed 일 때 금액
+  percentage  Float?   // type=percentage 일 때 비율 (0~1)
+  priority    Int      @default(0) // 실행 순서
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BankTransaction {
+  id          String   @id @default(cuid())
+  accountId   String
+  account     BankAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  date        DateTime @db.Date
+  type        String   // plan | actual
+  category    String   // salary | transfer | expense | etc
+  amount      Float
+  memo        String?
+
+  createdAt   DateTime @default(now())
+
+  @@index([accountId, date])
+  @@index([date(sort: Desc)])
+}
+
+// ===== Real Estate =====
+model RELoanRate {
+  id          String   @id @default(cuid())
+  category    String   // policy_mortgage | bank_mortgage | jeonse
+  product     String   // 보금자리론, 디딤돌, etc
+  type        String?  // variable | fixed | mixed
+  rateMin     Float
+  rateMax     Float
+  baseDate    DateTime @db.Date
+  note        String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([category, product, baseDate])
+  @@index([category])
+}
+
+model RECalculation {
+  id              String   @id @default(cuid())
+  label           String?  // 계산 시나리오 이름
+  purchasePrice   Float    // 매매가 P
+  jeonsePrice     Float    // 전세가 J
+  monthlyRent     Float?   // 월세 CF
+  growthRate      Float    // 기대 성장률 g
+  requiredReturn  Float    // 요구 수익률 R
+  loanRate        Float    // 대출 금리 i
+  ltv             Float    // LTV (0~1)
+
+  // 산출 결과
+  jeonseRatio     Float?   // J/P
+  gap             Float?   // P-J
+  nominalYield    Float?   // annual_rent / P
+  fairPrice       Float?   // CF / (R-g)
+  leverageWarning Boolean  @default(false)
+
+  createdAt       DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
+}
+
+// ===== 이벤트 / 알림 =====
+model Event {
+  id        String   @id @default(cuid())
+  type      String   // risk_alert | regime_change | rate_change
+  title     String
+  message   String   @db.Text
+  severity  String   // info | warning | critical
+  data      Json?
+  readAt    DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([type, createdAt(sort: Desc)])
+}
+
+// ===== 작업 로그 =====
+model JobLog {
+  id        String   @id @default(cuid())
+  jobName   String   // macro_fetch | youtube_fetch | summarize | report | notify | regime | correlation | risk | sentiment | story
+  status    String   // running | success | failed | retrying
+  message   String?  @db.Text
+  details   Json?    // 상세 정보 (에러 스택 등)
+  retry     Int      @default(0)
+  startedAt DateTime @default(now())
+  endedAt   DateTime?
+  duration  Int?     // 밀리초
+
+  @@index([jobName, startedAt(sort: Desc)])
+}

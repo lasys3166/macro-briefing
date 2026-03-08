@@ -1,0 +1,164 @@
+{
+    "indicators": [
+        {
+            "name": "KR_3Y_BOND",
+            "label": "한국 3년 국채금리",
+            "category": "interest_rate",
+            "ticker": "^KR3YT=RR",
+            "unit": "%",
+            "fallbackSource": "investing"
+        },
+        {
+            "name": "KR_10Y_BOND",
+            "label": "한국 10년 국채금리",
+            "category": "interest_rate",
+            "ticker": "^KR10YT=RR",
+            "unit": "%",
+            "fallbackSource": "investing"
+        },
+        {
+            "name": "US_2Y_BOND",
+            "label": "미국 2년 국채금리",
+            "category": "interest_rate",
+            "ticker": "^IRX",
+            "unit": "%",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "US_10Y_BOND",
+            "label": "미국 10년 국채금리",
+            "category": "interest_rate",
+            "ticker": "^TNX",
+            "unit": "%",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "US_30Y_BOND",
+            "label": "미국 30년 국채금리",
+            "category": "interest_rate",
+            "ticker": "^TYX",
+            "unit": "%",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "KOSPI",
+            "label": "코스피 지수",
+            "category": "stock_index",
+            "ticker": "^KS11",
+            "unit": "pt",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "SP500",
+            "label": "S&P500 지수",
+            "category": "stock_index",
+            "ticker": "^GSPC",
+            "unit": "pt",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "NASDAQ",
+            "label": "나스닥 지수",
+            "category": "stock_index",
+            "ticker": "^IXIC",
+            "unit": "pt",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "DOW",
+            "label": "다우존스 지수",
+            "category": "stock_index",
+            "ticker": "^DJI",
+            "unit": "pt",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "NIKKEI225",
+            "label": "니케이225 지수",
+            "category": "stock_index",
+            "ticker": "^N225",
+            "unit": "pt",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "MSCI_EM",
+            "label": "MSCI 신흥국 ETF",
+            "category": "stock_index",
+            "ticker": "EEM",
+            "unit": "pt",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "USD_KRW",
+            "label": "원달러 환율",
+            "category": "exchange_rate",
+            "ticker": "KRW=X",
+            "unit": "원",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "DXY",
+            "label": "달러 인덱스",
+            "category": "exchange_rate",
+            "ticker": "DX-Y.NYB",
+            "unit": "pt",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "EUR_USD",
+            "label": "유로/달러",
+            "category": "exchange_rate",
+            "ticker": "EURUSD=X",
+            "unit": "",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "USD_JPY",
+            "label": "달러/엔",
+            "category": "exchange_rate",
+            "ticker": "USDJPY=X",
+            "unit": "엔",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "USD_CNY",
+            "label": "달러/위안",
+            "category": "exchange_rate",
+            "ticker": "USDCNY=X",
+            "unit": "위안",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "VIX",
+            "label": "VIX 변동성 지수",
+            "category": "volatility",
+            "ticker": "^VIX",
+            "unit": "pt",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "GOLD",
+            "label": "금 선물",
+            "category": "commodity",
+            "ticker": "GC=F",
+            "unit": "USD",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "WTI",
+            "label": "WTI 원유 선물",
+            "category": "commodity",
+            "ticker": "CL=F",
+            "unit": "USD",
+            "fallbackSource": "yahoo"
+        },
+        {
+            "name": "COPPER",
+            "label": "구리 선물",
+            "category": "commodity",
+            "ticker": "HG=F",
+            "unit": "USD",
+            "fallbackSource": "yahoo"
+        }
+    ]
+}

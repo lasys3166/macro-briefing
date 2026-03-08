@@ -59,12 +59,6 @@ export default function DashboardPage() {
 
     useEffect(() => { fetchAll(); }, [fetchAll]);
 
-    // 1시간마다 자동 갱신
-    useEffect(() => {
-        const interval = setInterval(() => { fetchAll(); }, 3600 * 1000);
-        return () => clearInterval(interval);
-    }, [fetchAll]);
-
     const regimeColor = (label: string) => {
         if (label === 'RISK_ON') return 'var(--accent-green)';
         if (label === 'RISK_OFF') return 'var(--accent-red)';
@@ -90,8 +84,8 @@ export default function DashboardPage() {
     return (
         <div>
             <div className="page-header">
-                <h2>🌍 세계 경제 현황</h2>
-                <p className="subtitle">Regime · Risk Radar · Fear & Greed · Correlation · Market Briefing</p>
+                <h2>🏦 매크로 대시보드</h2>
+                <p className="subtitle">Macro Regime · Risk Radar · Fear &amp; Greed · Correlation · Story</p>
             </div>
 
             {/* Row 1: Regime + Fear & Greed */}
@@ -338,7 +332,7 @@ export default function DashboardPage() {
             {/* Row 4: Macro Story */}
             <div className="card section-gap animate-in" style={{ animationDelay: '0.2s' }}>
                 <div className="card-header" style={{ flexWrap: 'wrap', gap: '8px' }}>
-                    <h3 className="card-title">📝 오늘의 시장 브리핑</h3>
+                    <h3 className="card-title">📝 오늘의 매크로 스토리</h3>
                     {story && <span className="badge badge-blue">{story.regime}</span>}
                 </div>
                 {story && (
@@ -394,7 +388,7 @@ export default function DashboardPage() {
 
             {/* Refresh */}
             <div style={{ textAlign: 'center', marginTop: '20px', marginBottom: '40px' }}>
-                <button className="btn btn-secondary" onClick={fetchAll}>🔄 세계 경제 새로고침</button>
+                <button className="btn btn-secondary" onClick={fetchAll}>🔄 대시보드 새로고침</button>
             </div>
         </div>
     );

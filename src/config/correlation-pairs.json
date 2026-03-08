@@ -1,0 +1,69 @@
+{
+    "pairs": [
+        {
+            "id": "SPX_vs_US10Y",
+            "a": "SP500",
+            "b": "US_10Y_BOND",
+            "label": "S&P500 vs 미국10년"
+        },
+        {
+            "id": "NDX_vs_US10Y",
+            "a": "NASDAQ",
+            "b": "US_10Y_BOND",
+            "label": "나스닥 vs 미국10년"
+        },
+        {
+            "id": "SPX_vs_DXY",
+            "a": "SP500",
+            "b": "DXY",
+            "label": "S&P500 vs 달러인덱스"
+        },
+        {
+            "id": "NDX_vs_DXY",
+            "a": "NASDAQ",
+            "b": "DXY",
+            "label": "나스닥 vs 달러인덱스"
+        },
+        {
+            "id": "VIX_vs_SPX",
+            "a": "VIX",
+            "b": "SP500",
+            "label": "VIX vs S&P500"
+        },
+        {
+            "id": "GOLD_vs_US10Y",
+            "a": "GOLD",
+            "b": "US_10Y_BOND",
+            "label": "금 vs 미국10년"
+        },
+        {
+            "id": "COPPER_vs_SPX",
+            "a": "COPPER",
+            "b": "SP500",
+            "label": "구리 vs S&P500"
+        },
+        {
+            "id": "NIKKEI_vs_USDJPY",
+            "a": "NIKKEI225",
+            "b": "USD_JPY",
+            "label": "니케이 vs 달러엔"
+        },
+        {
+            "id": "KOSPI_vs_USDKRW",
+            "a": "KOSPI",
+            "b": "USD_KRW",
+            "label": "코스피 vs 원달러"
+        },
+        {
+            "id": "WTI_vs_DXY",
+            "a": "WTI",
+            "b": "DXY",
+            "label": "원유 vs 달러인덱스"
+        }
+    ],
+    "windows": [
+        20,
+        60,
+        120
+    ]
+}

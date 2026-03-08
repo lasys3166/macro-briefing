@@ -1,0 +1,121 @@
+{
+    "signals": [
+        {
+            "id": "vix_spike",
+            "label": "VIX 급등",
+            "indicator": "VIX",
+            "weight": 0.12,
+            "conditions": {
+                "absThreshold": 25,
+                "dailyChangePct": 20
+            }
+        },
+        {
+            "id": "move_spike",
+            "label": "MOVE 급등",
+            "indicator": "MOVE",
+            "weight": 0.08,
+            "conditions": {
+                "absThreshold": 120
+            }
+        },
+        {
+            "id": "dxy_breakout",
+            "label": "DXY 돌파",
+            "indicator": "DXY",
+            "weight": 0.08,
+            "conditions": {
+                "aboveHighPct": 1.0,
+                "lookback": 20
+            }
+        },
+        {
+            "id": "yield_spike",
+            "label": "금리 급등",
+            "indicator": "US_10Y_BOND",
+            "weight": 0.10,
+            "conditions": {
+                "dailyChangeBp": 15
+            }
+        },
+        {
+            "id": "curve_inversion",
+            "label": "수익률 커브 역전",
+            "indicators": [
+                "US_10Y_BOND",
+                "US_2Y_BOND"
+            ],
+            "weight": 0.10,
+            "conditions": {
+                "spread_below": 0
+            }
+        },
+        {
+            "id": "equity_drawdown",
+            "label": "주식 급락",
+            "indicator": "SP500",
+            "weight": 0.12,
+            "conditions": {
+                "drawdownPct": -5,
+                "lookback": 20
+            }
+        },
+        {
+            "id": "fx_stress",
+            "label": "환율 스트레스",
+            "indicator": "USD_KRW",
+            "weight": 0.08,
+            "conditions": {
+                "absThreshold": 1380,
+                "dailyChangePct": 1.5
+            }
+        },
+        {
+            "id": "oil_shock",
+            "label": "유가 쇼크",
+            "indicator": "WTI",
+            "weight": 0.06,
+            "conditions": {
+                "dailyChangePct": 5
+            }
+        },
+        {
+            "id": "gold_flight",
+            "label": "안전자산 선호",
+            "indicator": "GOLD",
+            "weight": 0.06,
+            "conditions": {
+                "aboveHighPct": 2.0,
+                "lookback": 20,
+                "requireVixUp": true
+            }
+        },
+        {
+            "id": "em_stress",
+            "label": "신흥국 스트레스",
+            "indicator": "MSCI_EM",
+            "weight": 0.07,
+            "conditions": {
+                "drawdownPct": -5,
+                "lookback": 20
+            }
+        },
+        {
+            "id": "liquidity_tight",
+            "label": "유동성 긴축",
+            "indicator": "SOFR",
+            "weight": 0.07,
+            "conditions": {
+                "spreadWidening": true
+            }
+        },
+        {
+            "id": "corr_shift",
+            "label": "상관관계 급변",
+            "weight": 0.06,
+            "conditions": {
+                "shiftThreshold": 0.3
+            }
+        }
+    ]
+}

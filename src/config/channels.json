@@ -1,0 +1,89 @@
+{
+  "channels": [
+    {
+      "id": "UCTgcoEB4jHOmMcE_Et3bDjg",
+      "name": "삼프로TV_경제의신과함께",
+      "url": "https://www.youtube.com/@3protv",
+      "trustWeight": 0.9,
+      "language": "ko",
+      "tags": [
+        "경제",
+        "시장분석",
+        "금리",
+        "환율"
+      ]
+    },
+    {
+      "id": "UCaHhVAqe3QDIjLEFjgrMGpQ",
+      "name": "슈카월드",
+      "url": "https://www.youtube.com/@syukaworld",
+      "trustWeight": 0.85,
+      "language": "ko",
+      "tags": [
+        "경제",
+        "시사",
+        "글로벌"
+      ]
+    },
+    {
+      "id": "UCpIklzi-YU90h42Fw1tLpjA",
+      "name": "한국경제TV",
+      "url": "https://www.youtube.com/@wowtv",
+      "trustWeight": 0.8,
+      "language": "ko",
+      "tags": [
+        "증시",
+        "경제뉴스",
+        "금리"
+      ]
+    },
+    {
+      "id": "UCFe-MkEny3TfgPzudYMjJKw",
+      "name": "MKTV 김미경TV",
+      "url": "https://www.youtube.com/@maboroshi",
+      "trustWeight": 0.7,
+      "language": "ko",
+      "tags": [
+        "자기계발",
+        "경제트렌드"
+      ],
+      "active": true
+    },
+    {
+      "id": "UCGqm7Cv-Ym3H7TVgjsSShAA",
+      "name": "부읽남 (부동산읽어주는남자)",
+      "url": "https://www.youtube.com/@boodong",
+      "trustWeight": 0.8,
+      "language": "ko",
+      "tags": [
+        "부동산",
+        "경제",
+        "투자"
+      ],
+      "active": true
+    }
+  ],
+  "relevanceKeywords": [
+    "금리",
+    "환율",
+    "주가",
+    "코스피",
+    "나스닥",
+    "S&P500",
+    "부동산",
+    "인플레이션",
+    "경기침체",
+    "고용",
+    "GDP",
+    "연준",
+    "한국은행",
+    "기준금리",
+    "국채",
+    "달러",
+    "interest rate",
+    "inflation",
+    "recession",
+    "Fed",
+    "bond yield"
+  ]
+}
